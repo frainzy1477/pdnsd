@@ -1,0 +1,73 @@
+on:
+  push:
+    branches: 
+      - master
+
+name: pdnsd
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    name: Build pdnsd Package  
+    strategy:
+      fail-fast: false
+      matrix:
+        SDK_URL:
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/sunxi/cortexa53/openwrt-sdk-21.02.0-rc1-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/sunxi/cortexa8/openwrt-sdk-21.02.0-rc1-sunxi-cortexa8_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/mt7621/openwrt-sdk-21.02.0-rc1-ramips-mt7621_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/mt7620/openwrt-sdk-21.02.0-rc1-ramips-mt7620_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/rt305x/openwrt-sdk-21.02.0-rc1-ramips-rt305x_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm53xx/generic/openwrt-sdk-21.02.0-rc1-bcm53xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm47xx/generic/openwrt-sdk-19.07.7-brcm47xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/tiny/openwrt-sdk-19.07.7-ar71xx-tiny_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/nand/openwrt-sdk-19.07.7-ar71xx-nand_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/mikrotik/openwrt-sdk-19.07.7-ar71xx-mikrotik_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/generic/openwrt-sdk-19.07.7-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ipq40xx/generic/openwrt-sdk-21.02.0-rc1-ipq40xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ipq806x/generic/openwrt-sdk-21.02.0-rc1-ipq806x-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/x86/generic/openwrt-sdk-21.02.0-rc1-x86-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/x86/64/openwrt-sdk-21.02.0-rc1-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/rockchip/armv8/openwrt-sdk-21.02.0-rc1-rockchip-armv8_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm2708/bcm2708/openwrt-sdk-19.07.7-brcm2708-bcm2708_gcc-7.5.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm2708/bcm2709/openwrt-sdk-19.07.7-brcm2708-bcm2709_gcc-7.5.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm2708/bcm2710/openwrt-sdk-19.07.7-brcm2708-bcm2710_gcc-7.5.0_musl.Linux-x86_64.tar.xz
+    steps:
+    - uses: actions/checkout@master
+    - name: Install env dependencies
+      run: |
+        sudo -E apt-get -qq update
+        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion git-core gcc-multilib libelf-dev autoconf automake libtool libev-dev libc-ares-dev libudns-dev libncurses-dev c-ares libev libopenssl libsodium mbedtls pcre libncursesw6
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean 
+
+    - name: Download Openwrt SDK
+      env:
+        SDK_URL: ${{ matrix.SDK_URL }}
+
+      run: |
+        SDK_HOME=$(head -c -8 <<< $(basename $SDK_URL))
+        wget $SDK_URL
+        tar xf $(basename $SDK_URL) -C ~/
+        mv ~/$SDK_HOME ~/sdk
+        
+    - name: Download Packages
+      run: |
+        cd ~/sdk
+        # Pdnsd
+        git clone https://github.com/frainzy1477/pdnsd package/pdnsd
+        ./scripts/feeds update -a
+        ./scripts/feeds install 
+
+    - name: Compile
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        cd ~/sdk
+        make defconfig
+        make package/pdnsd/compile -j$(nproc) V=s
+        
+    - name: Upload - push to artifact file
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ format('{0}.{1}.{2}', github.workflow, github.actor, github.event_name) }}
+        path: /../../sdk/bin
