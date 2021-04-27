@@ -70,4 +70,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: ${{ format('{0}.{1}.{2}', github.workflow, github.actor, github.event_name) }}
-        path: /../../sdk/bin
+        path: ../../../sdk/bin
