@@ -65,9 +65,7 @@ jobs:
         cd ~/sdk
         make defconfig
         make package/pdnsd/compile -j$(nproc) V=s
-        cd ~/sdk/bin
-        newdir=bin$(date +%Y%m%d%H%M%S)
-        mkdir -p "$newdir" && cp -a "bin/packages" "$newdir"
+        
     - name: Upload - push to artifact file
       uses: actions/upload-artifact@v1
       with:
