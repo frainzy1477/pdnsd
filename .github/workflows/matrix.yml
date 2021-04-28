@@ -12,25 +12,30 @@ jobs:
       fail-fast: false
       matrix:
         SDK_URL:
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm47xx/mips74k/openwrt-sdk-21.02.0-rc1-bcm47xx-mips74k_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm47xx/generic/openwrt-sdk-21.02.0-rc1-bcm47xx-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm47xx/legacy/openwrt-sdk-21.02.0-rc1-bcm47xx-legacy_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm4908/generic/openwrt-sdk-21.02.0-rc1-bcm4908-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm63xx/generic/openwrt-sdk-21.02.0-rc1-bcm63xx-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ath79/tiny/openwrt-sdk-21.02.0-rc1-ath79-tiny_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ath79/nand/openwrt-sdk-21.02.0-rc1-ath79-nand_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ath79/generic/openwrt-sdk-21.02.0-rc1-ath79-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm27xx/bcm2708/openwrt-sdk-21.02.0-rc1-bcm27xx-bcm2708_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm27xx/bcm2709/openwrt-sdk-21.02.0-rc1-bcm27xx-bcm2709_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm27xx/bcm2710/openwrt-sdk-21.02.0-rc1-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm27xx/bcm2711/openwrt-sdk-21.02.0-rc1-bcm27xx-bcm2711_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/sunxi/cortexa53/openwrt-sdk-21.02.0-rc1-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/sunxi/cortexa8/openwrt-sdk-21.02.0-rc1-sunxi-cortexa8_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+        - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/mt76x8/openwrt-sdk-21.02.0-rc1-ramips-mt76x8_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/mt7621/openwrt-sdk-21.02.0-rc1-ramips-mt7621_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/mt7620/openwrt-sdk-21.02.0-rc1-ramips-mt7620_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ramips/rt305x/openwrt-sdk-21.02.0-rc1-ramips-rt305x_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/bcm53xx/generic/openwrt-sdk-21.02.0-rc1-bcm53xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm47xx/generic/openwrt-sdk-19.07.7-brcm47xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/tiny/openwrt-sdk-19.07.7-ar71xx-tiny_gcc-7.5.0_musl.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/nand/openwrt-sdk-19.07.7-ar71xx-nand_gcc-7.5.0_musl.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/mikrotik/openwrt-sdk-19.07.7-ar71xx-mikrotik_gcc-7.5.0_musl.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/ar71xx/generic/openwrt-sdk-19.07.7-ar71xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ipq40xx/generic/openwrt-sdk-21.02.0-rc1-ipq40xx-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/ipq806x/generic/openwrt-sdk-21.02.0-rc1-ipq806x-generic_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/x86/generic/openwrt-sdk-21.02.0-rc1-x86-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/x86/64/openwrt-sdk-21.02.0-rc1-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         - https://downloads.openwrt.org/releases/21.02.0-rc1/targets/rockchip/armv8/openwrt-sdk-21.02.0-rc1-rockchip-armv8_gcc-8.4.0_musl.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm2708/bcm2708/openwrt-sdk-19.07.7-brcm2708-bcm2708_gcc-7.5.0_musl_eabi.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm2708/bcm2709/openwrt-sdk-19.07.7-brcm2708-bcm2709_gcc-7.5.0_musl_eabi.Linux-x86_64.tar.xz
-        - https://downloads.openwrt.org/releases/19.07.7/targets/brcm2708/bcm2710/openwrt-sdk-19.07.7-brcm2708-bcm2710_gcc-7.5.0_musl.Linux-x86_64.tar.xz
     steps:
     - uses: actions/checkout@master
     - name: Install env dependencies
